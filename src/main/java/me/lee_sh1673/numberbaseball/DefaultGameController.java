@@ -22,7 +22,7 @@ public class DefaultGameController implements NumberBaseballController {
 
 			// 입력처리
 			gameProcessor.processUserInput();
-			gameProcessor.processCompareNumbers();
+			gameProcessor.compareAnswerWithGuessNumber();
 
 			// 결과 화면 출력
 			resultView.displayResultView(gameProcessor.getGameResults());

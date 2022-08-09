@@ -1,8 +1,8 @@
 package me.lee_sh1673.numberbaseball;
 
-import java.util.List;
+import java.util.Map;
 
 public interface BaseballResultView {
 
-	void displayResultView(List<BaseBallStatus> baseBallStatus);
+	void displayResultView(Map<BaseBallStatus, Long> baseBallStatus);
 }

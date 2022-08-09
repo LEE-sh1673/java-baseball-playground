@@ -2,8 +2,6 @@ package me.lee_sh1673.numberbaseball;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +28,7 @@ class BaseballGameProcessorTest {
 		// When
 		gameProcessor.setAnswer(answer);
 		gameProcessor.setGuessNumbers(guessNumbers);
-		gameProcessor.processCompareNumbers();
+		gameProcessor.compareAnswerWithGuessNumber();
 
 		// Then
 		assertThat(gameProcessor.isAllStrikes()).isTrue();

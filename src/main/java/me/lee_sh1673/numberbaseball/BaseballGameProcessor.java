@@ -3,7 +3,8 @@ package me.lee_sh1673.numberbaseball;
 import static me.lee_sh1673.numberbaseball.Attributes.*;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -46,13 +47,13 @@ public class BaseballGameProcessor {
 		return sc.nextInt();
 	}
 
-	public void processCompareNumbers() {
+	public void compareAnswerWithGuessNumber() {
 		for (int i = 0; i < guessNumbers.length; i++) {
-			compareAnswerWith(i, guessNumbers[i]);
+			compareAnswerWith(guessNumbers[i], i);
 		}
 	}
 
-	private void compareAnswerWith(final int position, final String number) {
+	private void compareAnswerWith(final String number, final int position) {
 
 		if (answer.indexOf(number) == position) {
 			gameStatus[position] = BaseBallStatus.STRIKE;
@@ -73,6 +74,23 @@ public class BaseballGameProcessor {
 			.allMatch(status -> status.equals(BaseBallStatus.STRIKE));
 	}
 
+	private long getNumberOfStatusBy(final BaseBallStatus baseBallStatus) {
+		return Arrays.stream(gameStatus)
+			.filter(status -> status.equals(baseBallStatus))
+			.count();
+	}
+
+	public Map<BaseBallStatus, Long> getGameResults() {
+
+		final Map<BaseBallStatus, Long> currentGameStatus
+			= new HashMap<>();
+
+		for (final BaseBallStatus status : gameStatus) {
+			currentGameStatus.put(status, getNumberOfStatusBy(status));
+		}
+		return currentGameStatus;
+	}
+
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
@@ -83,9 +101,5 @@ public class BaseballGameProcessor {
 
 	public BaseBallStatus[] getGameStatus() {
 		return gameStatus;
-	}
-
-	public List<BaseBallStatus> getGameResults() {
-		return Arrays.asList(gameStatus);
 	}
 }
