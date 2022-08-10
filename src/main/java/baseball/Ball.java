@@ -6,11 +6,11 @@ public class Ball {
 
 	private final int position;
 
-	private final int number;
+	private final BallNumber number;
 
 	public Ball(int position, int number) {
 		this.position = position;
-		this.number = number;
+		this.number = new BallNumber(number);
 	}
 
 	public BallStatus play(final Ball ball) {
@@ -27,8 +27,8 @@ public class Ball {
 		return BallStatus.NOTHING;
 	}
 
-	private boolean matchBallNumber(final int number) {
-		return this.number == number;
+	private boolean matchBallNumber(final BallNumber number) {
+		return this.number.equals(number);
 	}
 
 	@Override
@@ -42,6 +42,6 @@ public class Ball {
 		}
 		Ball other = (Ball)o;
 		return this.position == other.position
-			&& this.number == other.number;
+			&& this.number.equals(other.number);
 	}
 }
