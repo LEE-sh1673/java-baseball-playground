@@ -8,21 +8,22 @@ public class Balls {
 	private final List<Ball> balls;
 
 	public Balls(List<Integer> numbers) {
-		final List<Ball> balls = new ArrayList<>();
-
-		for (int i = 1; i <= numbers.size(); i++) {
-			balls.add(new Ball(i, numbers.get(i - 1)));
-		}
-		this.balls = balls;
+		this.balls = mapBall(numbers);
 	}
 
-	public BallStatus play(final Ball other) {
-		return this.balls.stream()
-			.map(ball -> ball.play(other))
-			.filter(ballStatus ->
-				ballStatus.equals(BallStatus.STRIKE)
-				|| ballStatus.equals(BallStatus.BALL))
-			.findAny()
+	private static List<Ball> mapBall(List<Integer> numbers) {
+		final List<Ball> balls = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			balls.add(new Ball(i + 1, numbers.get(i)));
+		}
+		return balls;
+	}
+
+	public BallStatus play(final Ball userBall) {
+		return balls.stream()
+			.map(ball -> ball.play(userBall))
+			.filter(BallStatus::isNotNothing)
+			.findFirst()
 			.orElse(BallStatus.NOTHING);
 	}
 }
