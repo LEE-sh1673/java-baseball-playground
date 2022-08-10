@@ -11,6 +11,10 @@ public class Ball {
 	}
 
 	public BallStatus play(final Ball ball) {
+
+		if (number == ball.number) {
+			return BallStatus.BALL;
+		}
 		return BallStatus.NOTHING;
 	}
 }

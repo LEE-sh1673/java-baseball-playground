@@ -21,4 +21,12 @@ public class BallTest {
 		BallStatus status = ball.play(new Ball(2, 5));
 		assertThat(status).isEqualTo(BallStatus.NOTHING);
 	}
+
+	@DisplayName("1:1 숫자 비교::볼")
+	@Test
+	void should_get_ball() {
+		BallStatus status = ball.play(new Ball(1, 5));
+		assertThat(status).isEqualTo(BallStatus.BALL);
+	}
+
 }
