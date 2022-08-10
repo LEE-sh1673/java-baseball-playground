@@ -12,9 +12,13 @@ public class Ball {
 
 	public BallStatus play(final Ball ball) {
 
-		if (number == ball.number) {
+		if (ball.isMatchNumber(number)) {
 			return BallStatus.BALL;
 		}
 		return BallStatus.NOTHING;
+	}
+
+	private boolean isMatchNumber(final int number) {
+		return this.number == number;
 	}
 }
