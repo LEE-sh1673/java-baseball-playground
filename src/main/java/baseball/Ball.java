@@ -12,10 +12,27 @@ public class Ball {
 
 	public BallStatus play(final Ball ball) {
 
+		if (this.equals(ball)) {
+			return BallStatus.STRIKE;
+		}
+
 		if (ball.isMatchNumber(number)) {
 			return BallStatus.BALL;
 		}
 		return BallStatus.NOTHING;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj) return true;
+
+		if (obj == null || this.getClass() != obj.getClass()) {
+			return false;
+		}
+		Ball other = (Ball)obj;
+		return this.position == other.position
+			&& this.number == other.number;
 	}
 
 	private boolean isMatchNumber(final int number) {

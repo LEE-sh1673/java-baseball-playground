@@ -29,4 +29,11 @@ public class BallTest {
 		assertThat(status).isEqualTo(BallStatus.BALL);
 	}
 
+	@DisplayName("1:1 숫자 비교::스트라이크")
+	@Test
+	void should_get_strike() {
+		BallStatus status = ball.play(new Ball(1, 1));
+		assertThat(status).isEqualTo(BallStatus.STRIKE);
+	}
+
 }
