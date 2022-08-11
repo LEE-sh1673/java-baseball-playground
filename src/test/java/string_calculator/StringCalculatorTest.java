@@ -29,4 +29,19 @@ public class StringCalculatorTest {
 		assertThat(cal.add("1,2,3")).isEqualTo(6);
 		assertThat(cal.add("1,2:3")).isEqualTo(6);
 	}
+
+	@DisplayName("커스텀 구분자 구분 검증")
+	@Test
+	void should_get_correct_custom_delimiter() {
+		assertThat(cal.getDelimiter("1,2:3"))
+			.isEqualTo("[,:]");
+		assertThat(cal.getDelimiter("//;\n1;2;3"))
+			.isEqualTo(";");
+	}
+
+	@DisplayName("커스텀 구분자 파싱 검증")
+	@Test
+	void should_parse_custom_delimiter() {
+		assertThat(cal.add("//;\n1;2;3")).isEqualTo(6);
+	}
 }
