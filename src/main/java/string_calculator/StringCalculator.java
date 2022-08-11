@@ -1,8 +1,17 @@
 package string_calculator;
 
+import java.util.Arrays;
+
 public class StringCalculator {
 
 	public int add(final String number) {
-		return 0;
+
+		if (number == null || number.isEmpty()) {
+			return 0;
+		}
+		return Arrays
+			.stream(number.split("[,:]"))
+			.mapToInt(Integer::parseInt)
+			.sum();
 	}
 }
