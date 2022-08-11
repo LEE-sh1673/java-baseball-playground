@@ -8,12 +8,23 @@ public class StringCalculator {
 
 	private static final String DEFAULT_DELIMITER = "[,:]";
 
-	public int add(final String numbers) {
+	private static final String CUSTOM_DELIMITER_PATTERN = "//+(.)\\n(.*)";
 
-		if (isNullOrEmpty(numbers)) {
+	private static final String[] OPERATORS = new String[] {
+		"\\+", "\\*", "\\^"
+	};
+
+	public int add(final String text) {
+
+		if (isNullOrEmpty(text)) {
 			return 0;
 		}
-		return computeNumbers(numbers, getDelimiter(numbers));
+		int[] numbers = splitNumbers(text, getDelimiter(text));
+
+		if (isNegativeNumberContains(numbers)) {
+			throw new RuntimeException("숫자는 양수만 가능합니다.");
+		}
+		return compute(numbers);
 	}
 
 	boolean isNullOrEmpty(final String numbers) {
@@ -22,24 +33,42 @@ public class StringCalculator {
 
 	String getDelimiter(final String numbers) {
 		Matcher matcher = Pattern
-			.compile("//+(.)\\n(.*)")
+			.compile(CUSTOM_DELIMITER_PATTERN)
 			.matcher(numbers);
 
 		if (matcher.find()) {
-			return matcher.group(1);
+			return formatDelimiter(matcher.group(1));
 		}
 		return DEFAULT_DELIMITER;
 	}
 
-	int computeNumbers(final String numbers, final String delimiter) {
-		return Arrays.stream(numbers.split(delimiter))
+	String formatDelimiter(final String delimiter) {
+		boolean isContains = Arrays.stream(OPERATORS)
+			.anyMatch(op -> op.contains(delimiter));
+
+		if (isContains) {
+			return "\\" + delimiter;
+		}
+		return delimiter;
+	}
+
+	int[] splitNumbers(final String text, final String delimiter) {
+		return Arrays.stream(text.split(delimiter))
 			.map(String::trim)
 			.filter(this::isDigit)
 			.mapToInt(Integer::valueOf)
-			.sum();
+			.toArray();
 	}
 
 	boolean isDigit(final String number) {
-		return number.matches("[0-9]");
+		return number.matches("-?[0-9]");
+	}
+
+	private boolean isNegativeNumberContains(final int[] numbers) {
+		return Arrays.stream(numbers).anyMatch(number -> number < 0);
+	}
+
+	int compute(final int[] numbers) {
+		return Arrays.stream(numbers).sum();
 	}
 }

@@ -42,6 +42,17 @@ public class StringCalculatorTest {
 	@DisplayName("커스텀 구분자 파싱 검증")
 	@Test
 	void should_parse_custom_delimiter() {
-		assertThat(cal.add("//;\n1;2;3")).isEqualTo(6);
+		assertThat(cal.add("//-\n1-2-3")).isEqualTo(6);
+		assertThat(cal.add("//*\n1*2*3")).isEqualTo(6);
+		assertThat(cal.add("//+\n1+2+3")).isEqualTo(6);
+		assertThat(cal.add("//^\n1^2^3")).isEqualTo(6);
+	}
+
+	@DisplayName("음수를 포함하는 문자열 검증")
+	@Test
+	void should_assert_negative_number() {
+		assertThatThrownBy(() -> cal.add("1:-2:3"))
+			.isInstanceOf(RuntimeException.class)
+			.hasMessage("숫자는 양수만 가능합니다.");
 	}
 }
