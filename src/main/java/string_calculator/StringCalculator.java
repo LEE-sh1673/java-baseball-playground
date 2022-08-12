@@ -10,9 +10,7 @@ public class StringCalculator {
 
 	private static final String CUSTOM_DELIMITER_PATTERN = "//+(.)\\n(.*)";
 
-	private static final String[] OPERATORS = new String[] {
-		"\\+", "\\*", "\\^"
-	};
+	private static final String OPERATORS = "+*^";
 
 	public int add(final String text) {
 
@@ -43,10 +41,8 @@ public class StringCalculator {
 	}
 
 	private String formatDelimiter(final String delimiter) {
-		boolean isContains = Arrays.stream(OPERATORS)
-			.anyMatch(op -> op.contains(delimiter));
 
-		if (isContains) {
+		if (OPERATORS.contains(delimiter)) {
 			return "\\" + delimiter;
 		}
 		return delimiter;
