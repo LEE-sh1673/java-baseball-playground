@@ -19,16 +19,16 @@ public class StringCalculator {
 		if (isNullOrEmpty(text)) {
 			return 0;
 		}
-		int[] numbers = splitNumbers(text, getDelimiter(text));
-
-		if (isNegativeNumberContains(numbers)) {
-			throw new RuntimeException("숫자는 양수만 가능합니다.");
-		}
-		return compute(numbers);
+		return sum(toInts(split(text)));
 	}
 
-	boolean isNullOrEmpty(final String numbers) {
+	private boolean isNullOrEmpty(final String numbers) {
 		return numbers == null || numbers.isEmpty();
+	}
+
+	private String[] split(final String text) {
+		final String delimiter = getDelimiter(text);
+		return text.split(delimiter);
 	}
 
 	String getDelimiter(final String numbers) {
@@ -42,7 +42,7 @@ public class StringCalculator {
 		return DEFAULT_DELIMITER;
 	}
 
-	String formatDelimiter(final String delimiter) {
+	private String formatDelimiter(final String delimiter) {
 		boolean isContains = Arrays.stream(OPERATORS)
 			.anyMatch(op -> op.contains(delimiter));
 
@@ -52,23 +52,28 @@ public class StringCalculator {
 		return delimiter;
 	}
 
-	int[] splitNumbers(final String text, final String delimiter) {
-		return Arrays.stream(text.split(delimiter))
+	private int[] toInts(final String[] values) {
+		return Arrays.stream(values)
 			.map(String::trim)
 			.filter(this::isDigit)
-			.mapToInt(Integer::valueOf)
+			.mapToInt(this::toPositive)
 			.toArray();
 	}
 
-	boolean isDigit(final String number) {
+	private boolean isDigit(final String number) {
 		return number.matches("-?\\d");
 	}
 
-	private boolean isNegativeNumberContains(final int[] numbers) {
-		return Arrays.stream(numbers).anyMatch(number -> number < 0);
+	private int toPositive(final String value) {
+		int number = Integer.parseInt(value);
+
+		if (number < 0) {
+			throw new RuntimeException("숫자는 양수만 가능합니다.");
+		}
+		return number;
 	}
 
-	int compute(final int[] numbers) {
+	private int sum(final int[] numbers) {
 		return Arrays.stream(numbers).sum();
 	}
 }
