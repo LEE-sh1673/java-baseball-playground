@@ -61,7 +61,7 @@ public class StringCalculator {
 	}
 
 	boolean isDigit(final String number) {
-		return number.matches("-?[0-9]");
+		return number.matches("-?\\d");
 	}
 
 	private boolean isNegativeNumberContains(final int[] numbers) {
