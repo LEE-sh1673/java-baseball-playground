@@ -79,6 +79,13 @@ PlayStatus compareWith(final Ball otherBall) {
 | `(1, 1)` | `(1, 4)` | `BALL`    |
 | `(1, 1)` | `(1, 1)` | `STRIKE`  |
 
+### 입출력 예시:: `Balls` / `Ball` 비교
+
+| com   | user     | return    |
+|-------|----------|-----------|
+| `123` | `(4, 5)` | `NOTHING` |
+| `123` | `(1, 4)` | `BALL`    |
+| `123` | `(1, 1)` | `STRIKE`  |
 
 ## 요구사항 정리
 
