@@ -35,4 +35,15 @@ public class Balls {
 			.findFirst()
 			.orElse(PlayStatus.NOTHING);
 	}
+
+	public PlayResult play(List<Integer> numbers) {
+		PlayResult playResult = new PlayResult();
+		List<Ball> other = mapBalls(numbers);
+
+		for (final Ball ball : other) {
+			PlayStatus status = play(ball);
+			playResult.report(status);
+		}
+		return playResult;
+	}
 }
