@@ -7,6 +7,79 @@
   - [ ] 같은 수가 전혀 없다면 `NOTHING`을 반환하도록 한다.
 - [ ] 비교한 결과를 사용자에게 보여준다.
 
+---
+
+## 구현 아이디어
+
+### 숫자값 비교 기능 
+
+- 사용자와 컴퓨터가 갖는 3가지 수 집합을 도메인 객체로 지정 
+  - e.g. `Balls`
+- 이때 각 객체를 비교할 때 자릿수와 숫자값을 모두 비교해야 함. 
+  - e.g. compare `ball1` with `ball2` using `(값, 자릿수)`.
+- 따라서 내부적으로 3개의 숫자에 대해 컨테이너 형식으로 저장한다고 가정.
+  - e.g. `Balls` has `List<Ball>`
+
+```java
+PlayResult result = Balls.play(com, player);
+// or
+PlayResult result = com.play(player);
+```
+- 비교 결과로 내부적으로 스트라이크/볼/낫싱의 발생 횟수를 가지고 있는 객체를 반환.
+- 내부적으로 하나의 `Balls` 객체에서 `play()` 메서드 호출 시 컨테이너 간 비교를 수행해야 함.
+```java
+// in context of play()..
+for (Ball ball of Player::Balls) {
+	for (Ball other_ball of Com::Balls) {
+		// compare ball with other ball..
+    }
+}
+```
+- 메서드의 간소화를 위해 다음을 고려. 
+  1. `Ball` 객체와 `Ball` 객체에 대한 비교 연산을 수행해여 상태값을 반환하는 메서드 추출.
+  2. `Balls` 객체와 `Ball` 객체를 비교 연산하여 가장 많이 발생한 상태값을 반환하는 메서드를 추출 
+
+```java
+// In play() of Balls
+// e.g. call `player.play(com)`
+PlayResult play(final Balls other) {
+	PlayResult result;
+	for (Ball ball of otherBalls.getBalls()) {
+        PlayStatus = player::compareWith(ball);
+        result.report(status);
+	}
+	return result;
+}
+
+PlayStatus compareWith(final Ball otherBall) {
+    Collection<PlayStatus> totalPlayStatus;
+    ...
+	for (Ball ball of player::Balls) {
+	    playStatus = ball.compare(otherBall);	
+        totalPlayStatus.add(playStatus);
+	}	
+	return MAX_OF(totalPlayStatus);
+}
+```
+
+정리하자면:
+
+1. `Balls` 객체는 `Ball` 객체를 1:3의 관계로 가짐.
+2. `Ball` 객체는 `(숫자값, 위치값)`을 가짐.
+3. `Balls`와 `Balls`를 비교하는 메서드는 각 요소 간의 비교 결과를 저장하고 있는 하나의 객체를 반환한다.
+4. 이때 다른 `Balls` 객체의 요소들을 순회하면서 아래의 과정을 수행해야 함. 
+   5. `Balls`와 `Ball`을 비교하는 메서드 호출 
+      6. `Ball`와 `Ball`을 비교하는 메서드 호출
+
+### 입출력 예시:: `Ball` / `Ball` 비교
+
+| com | user     | return    |
+| --- |----------|-----------|
+| `(1, 1)` | `(3, 5)` | `NOTHING` |
+| `(1, 1)` | `(1, 4)` | `BALL`    |
+| `(1, 1)` | `(1, 1)` | `STRIKE`  |
+
+
 ## 요구사항 정리
 
 - 기본적으로 1부터 9까지 서로 다른 수로 이루어진 3자리의 수를 맞추는 게임이다.
