@@ -1,26 +1,50 @@
-## [NEXTSTEP 플레이그라운드의 미션 진행 과정](https://github.com/next-step/nextstep-docs/blob/master/playground/README.md)
+# 문자열 계산기 기능 목록
 
----
-## 학습 효과를 높이기 위해 추천하는 미션 진행 방법
+2022-08-23
 
----
-1. 피드백 강의 전까지 미션 진행 
-> 피드백 강의 전까지 혼자 힘으로 미션 진행. 미션을 진행하면서 하나의 작업이 끝날 때 마다 add, commit
-> 예를 들어 다음 숫자 야구 게임의 경우 0, 1, 2단계까지 구현을 완료한 후 push
+## 기능목록
 
-![mission baseball](https://raw.githubusercontent.com/next-step/nextstep-docs/master/playground/images/mission_baseball.png)
+애플리케이션의 주요 기능은 크게 아래와 같이 나눌 수 있다.
 
----
-2. 피드백 앞 단계까지 미션 구현을 완료한 후 피드백 강의를 학습한다.
+| Features | Descriptions              | 예시                                                                       |
+| --- |--------------------------- |--------------------------------------------------------------------------|
+| Splitting | 입력받은 문자열을 의미 있는 단위로 분리한다. | `2 + 3 * 4 / 2` -> `['2', '+', '3', '*', '4', '/', '2']`                 |
+| Parsing | 분리한 단어들을 연산자와 피연산자로 구분한다. | `['2', '+', '3', '*', '4', '/', '2']` -> `[2, 3, 4, 2], ['+', '*', '/']` |
+| Calculate | 구분한 기호들을 사용하여 식을 계산한다.    | `[2, 3, 4, 2], ['+', '*', '/']` -> `10`                                   |
 
----
-3. Git 브랜치를 master 또는 main으로 변경한 후 피드백을 반영하기 위한 새로운 브랜치를 생성한 후 처음부터 다시 미션 구현을 도전한다.
+- 위 3가지 기능에 따른 책임들을 담당하는 3가지 객체가 존재한다고 가정.
+- 이때 협력 관계에 있어서 주고 받는 과정에서 메세지의 형태가 크게 변하게 되거나 더 많아질 수도 있음.
+- 따라서 필자는 하나의 컨트롤러 기능을 하는 객체에서 위와 같이 기능별로 분리한 객체들을 가지도록 함.
+- 예를 들어 `StringCalculator`에는 각각 3가지 주요 기능을 하는 메서드들이 존재하며, 이 기능들을 호출할 때는 `StringCalculator`가 각 기능을 담당하는 객체의 메서드를 호출하도록 만듦.
+- 각각 `StatementSplitter`, `StatementParser`, `StatementCalculator` 라고 임의의 이름을 붙임.
+- 각 객체의 책임들을 대표하는 몇가지 메세지들을 정의.
 
+| 객체 | 메세지                                                             |
+| --- |-----------------------------------------------------------------|
+| `StatementSplitter` | `split(String statement) : String[]`                            |
+| `StatementParser` | `parse(String[] words) : void`                                  |
+| `StatementCalculator` | `compute() : int` |
+
+- 이때 각 객체들에서 메서드를 호출하여 처리한 상태 값을 저장하는 용도로서 `StringCalculator`가 각각 피연산자와 연산자 리스트를 소유하도록 만든다.
+
+## 요구사항
+
+- 사용자가 입력한 문자열 값에 따라 사칙연산을 수행할 수 있는 계산기를 구현해야 한다. 
+- 문자열 계산기는 사칙연산의 계산 우선순위가 아닌 입력 값에 따라 계산 순서가 결정된다. 즉, 수학에서는 곱셈, 나눗셈이 덧셈, 뺄셈 보다 먼저 계산해야 하지만 이를 무시한다. 
+- 예를 들어 `2 + 3 * 4 / 2`와 같은 문자열을 입력할 경우 `10`을 출력해야 한다.
+
+### 힌트
+
+문자열을 입력 받은 후(`scanner`의 `nextLine()` 메소드 활용) 빈 공백 문자열을 기준으로 문자들을 분리해야 한다.
+
+```java
+String value = scanner.nextLine();
+String[] values = value.split(" ");
 ```
-git branch -a // 모든 로컬 브랜치 확인
-git checkout master // 기본 브랜치가 master인 경우
-git checkout main // 기본 브랜치가 main인 경우
 
-git checkout -b 브랜치이름
-ex) git checkout -b apply-feedback
-```
+
+### 입출력 예시
+
+| INPUT | OUTPUT |
+| --- | --- |
+| `2 + 3 * 4 / 2` | 10 |
