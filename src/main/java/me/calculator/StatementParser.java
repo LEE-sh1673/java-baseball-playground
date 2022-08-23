@@ -10,11 +10,17 @@ public class StatementParser {
 
 	private final String[] words;
 
+	private final int[] operands;
+
+	private final String[] operators;
+
 	public StatementParser(String[] words) {
 		this.words = words;
+		this.operands = mapToOperands();
+		this.operators = mapToOperators();
 	}
 
-	public int[] getOperands() {
+	public int[] mapToOperands() {
 		return Arrays.stream(this.words)
 			.filter(StatementParser::isDigit)
 			.mapToInt(StatementParser::toPositive)
@@ -34,7 +40,7 @@ public class StatementParser {
 		return word.matches(OPERAND_DELIMITER);
 	}
 
-	public String[] getOperators() {
+	public String[] mapToOperators() {
 		return Arrays.stream(this.words)
 			.filter(StatementParser::isOperator)
 			.toArray(String[]::new);
@@ -42,5 +48,13 @@ public class StatementParser {
 
 	private static boolean isOperator(final String word) {
 		return word.matches(OPERATOR_DELIMITER);
+	}
+
+	public String[] getOperators() {
+		return operators;
+	}
+
+	public int[] getOperands() {
+		return operands;
 	}
 }

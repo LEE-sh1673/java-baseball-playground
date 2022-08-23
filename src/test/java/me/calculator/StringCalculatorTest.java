@@ -20,6 +20,7 @@ public class StringCalculatorTest {
 	@DisplayName("문자열 연산자/피연산자 구분 테스트")
 	@Test
 	void should_parse_correctly() {
+		// give
 		String[] words = StatementSplitter.split(STATEMENT);
 		StatementParser statementParser = new StatementParser(words);
 
@@ -33,5 +34,20 @@ public class StringCalculatorTest {
 
 		assertThat(operators.length).isEqualTo(3);
 		assertThat(operators).containsExactly("+", "*", "/");
+	}
+
+	@DisplayName("계산 기능 테스트")
+	@Test
+	void should_compute_statement_correctly() {
+		// give
+		String[] words = StatementSplitter.split(STATEMENT);
+		StatementParser statementParser = new StatementParser(words);
+		StatementCalculator calculator = new StatementCalculator(statementParser);
+
+		// when
+		int result = calculator.compute();
+
+		// then
+		assertThat(result).isEqualTo(10);
 	}
 }
