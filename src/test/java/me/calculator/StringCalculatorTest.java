@@ -42,12 +42,23 @@ public class StringCalculatorTest {
 		// give
 		String[] words = StatementSplitter.split(STATEMENT);
 		StatementParser statementParser = new StatementParser(words);
-		StatementCalculator calculator = new StatementCalculator(statementParser);
+		StatementCalculator calculator = new StatementCalculator(
+			statementParser.getOperators(),
+			statementParser.getOperands()
+		);
 
 		// when
 		int result = calculator.compute();
 
 		// then
+		assertThat(result).isEqualTo(10);
+	}
+
+	@DisplayName("StringCalculator 기능 테스트")
+	@Test
+	void should_get_answer() {
+		StringCalculator calculator = new StringCalculator(STATEMENT);
+		int result = calculator.compute();
 		assertThat(result).isEqualTo(10);
 	}
 }
