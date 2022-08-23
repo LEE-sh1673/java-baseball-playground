@@ -20,7 +20,7 @@ public class StatementParser {
 		this.operators = mapToOperators();
 	}
 
-	public int[] mapToOperands() {
+	private int[] mapToOperands() {
 		return Arrays.stream(this.words)
 			.filter(StatementParser::isDigit)
 			.mapToInt(StatementParser::toPositive)
@@ -40,7 +40,7 @@ public class StatementParser {
 		return word.matches(OPERAND_DELIMITER);
 	}
 
-	public String[] mapToOperators() {
+	private String[] mapToOperators() {
 		return Arrays.stream(this.words)
 			.filter(StatementParser::isOperator)
 			.toArray(String[]::new);
