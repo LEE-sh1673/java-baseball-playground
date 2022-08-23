@@ -15,4 +15,11 @@ public class ValidationUtils {
 			throw new IllegalArgumentException("숫자는 중복될 수 없습니다.");
 		}
 	}
+
+	public static void validateSize(final List<Integer> numbers) {
+
+		if (numbers.size() != BALLS_SIZE) {
+			throw new IllegalArgumentException("숫자는 3자리어야 합니다.");
+		}
+	}
 }
