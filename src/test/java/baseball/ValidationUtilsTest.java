@@ -2,16 +2,19 @@ package baseball;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ValidationUtilsTest {
 
-	@DisplayName("야구 숫자 1~9 검증")
+	@DisplayName("입력 중복 검증 테스트")
 	@Test
-	void should_Get_Number_BetweenOneToNine() {
-		assertThat(ValidationUtils.validateNumber(0)).isFalse();
-		assertThat(ValidationUtils.validateNumber(1)).isTrue();
-		assertThat(ValidationUtils.validateNumber(9)).isTrue();
+	void should_validate_duplicate_correctly() {
+		assertThatThrownBy(() ->
+				ValidationUtils
+					.validateDuplicate(Arrays.asList(1, 1, 2))
+		).isInstanceOf(IllegalArgumentException.class);
 	}
 }

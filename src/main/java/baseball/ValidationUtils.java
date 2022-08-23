@@ -1,11 +1,18 @@
 package baseball;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class ValidationUtils {
 
-	public static final int MIN_NO = 1;
-	public static final int MAX_NO = 9;
+	private static final int BALLS_SIZE = 3;
 
-	public static boolean validateNumber(final int number) {
-		return number >= MIN_NO && number <= MAX_NO;
+	public static void validateDuplicate(final List<Integer> numbers) {
+		Set<Integer> hashSet = new HashSet<>(numbers);
+
+		if (hashSet.size() != BALLS_SIZE) {
+			throw new IllegalArgumentException("숫자는 중복될 수 없습니다.");
+		}
 	}
 }
