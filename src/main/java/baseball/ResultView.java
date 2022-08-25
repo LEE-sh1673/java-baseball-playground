@@ -23,7 +23,9 @@ public class ResultView {
 		if (numberOfStrikes == 0 && numberOfBalls == 0) {
 			return THREE_OUT;
 		}
-		return String.format("%d 스트라이크 %d볼",
-			numberOfStrikes, numberOfBalls);
+		return String.format("%s%s",
+			numberOfStrikes == 0 ? "" : String.format("%s 스트라이크 ", numberOfStrikes),
+			numberOfBalls == 0 ? "" : String.format("%s 볼", numberOfBalls)
+		);
 	}
 }
