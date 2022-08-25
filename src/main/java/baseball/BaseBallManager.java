@@ -1,5 +1,11 @@
 package baseball;
 
+import baseball.domain.Balls;
+import baseball.domain.PlayResult;
+import baseball.ui.ResultView;
+import baseball.utils.InputUtils;
+import baseball.utils.NumberGenerator;
+
 public class BaseBallManager {
 
 	private Balls com;

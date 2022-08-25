@@ -1,4 +1,6 @@
-package baseball;
+package baseball.ui;
+
+import baseball.domain.PlayResult;
 
 public class ResultView {
 
