@@ -1,9 +1,12 @@
-package baseball;
+package baseball.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import baseball.domain.Ball;
+import baseball.domain.BallStatus;
 
 public class BallTest {
 
