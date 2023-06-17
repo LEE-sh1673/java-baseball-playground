@@ -40,10 +40,13 @@ public class StringCalculator {
 
     public int calculate(final String expression) {
         List<String> expressions = getExpressions(expression);
-        int operand1 = Integer.parseInt(expressions.get(0));
-        int operand2 = Integer.parseInt(expressions.get(2));
-        return Operator.of(expressions.get(1))
-            .calculate(operand1, operand2);
+        int total = Integer.parseInt(expressions.get(0));
+
+        for (int i = 1; i < expressions.size(); i += 2) {
+            int operand = Integer.parseInt(expressions.get(i+1));
+            total = Operator.of(expressions.get(i)).calculate(total, operand);
+        }
+        return total;
     }
 
     private static List<String> getExpressions(final String expression) {

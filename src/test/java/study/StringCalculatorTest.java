@@ -39,4 +39,13 @@ public class StringCalculatorTest {
         assertThat(cal.calculate("4 / 4")).isEqualTo(1);
         assertThat(cal.calculate("44 / 2")).isEqualTo(22);
     }
+
+
+    @Test
+    @DisplayName("주어진 두 숫자 이상에 대한 연산을 수행할 수 있다.")
+    void add_threeNumber_ReturnAddValue() {
+        assertThat(cal.calculate("2 + 3 + 4")).isEqualTo(9);
+        assertThat(cal.calculate("2 + 3 * 4")).isEqualTo(20);
+        assertThat(cal.calculate("2 + 3 * 4 / 2")).isEqualTo(10);
+    }
 }
