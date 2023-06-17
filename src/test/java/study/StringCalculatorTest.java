@@ -23,4 +23,12 @@ public class StringCalculatorTest {
         assertThat(cal.calculate("2 - 10")).isEqualTo(-8);
         assertThat(cal.calculate("20 - 17")).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("주어진 두 숫자에 대한 곱셈을 수행할 수 있다.")
+    void mul_twoNumber_ReturnMulValue() {
+        assertThat(cal.calculate("2 * 10")).isEqualTo(20);
+        assertThat(cal.calculate("200 * 10")).isEqualTo(2000);
+        assertThat(cal.calculate("15 * 15")).isEqualTo(225);
+    }
 }
