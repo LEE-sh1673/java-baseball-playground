@@ -1,6 +1,7 @@
 package feedback;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -62,8 +63,19 @@ public class StringCalculatorTest {
     }
 
     @Test
+    @DisplayName("주어진 피연산자 중 음수가 존재하는 경우 예외를 발생시켜야 한다.")
+    void testGetOperands_givenNegativeNumbers_shouldThrowIllegalArgumentException() {
+        String statement = "-4 + 10";
+        String[] words = StatementSplitter.split(statement);
+
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> new StatementParser(words))
+            .withMessageContaining("숫자는 양수만 가능합니다.");
+    }
+
+    @Test
     @DisplayName("주어진 단어들로부터 연산자를 얻어올 수 있다.")
-    void testGetOperands_givenSplitWords_shouldReturnOperands() {
+    void testGetOperators_givenSplitWords_shouldReturnOperands() {
         String[] words = StatementSplitter.split(STATEMENT);
         StatementParser parser = new StatementParser(words);
         String[] operators = parser.getOperators();

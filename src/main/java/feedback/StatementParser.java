@@ -19,7 +19,6 @@ public class StatementParser {
 
     private int[] mapOperands(final String[] words) {
         return Arrays.stream(words)
-            .peek(System.out::println)
             .filter(StatementParser::isDigit)
             .mapToInt(StatementParser::toPositive)
             .toArray();
