@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 public class StringCalculator {
 
     private enum Operator {
-        ADD("+", (a, b) -> a + b);
+        ADD("+", (a, b) -> a + b),
+        SUB("-", (a, b) -> a - b);
 
         private final String sign;
 
@@ -29,19 +30,23 @@ public class StringCalculator {
         private boolean matchSign(final String sign) {
             return this.sign.equals(sign);
         }
+
+        public int calculate(final int operand1, final int operand2) {
+            return this.function.apply(operand1, operand2);
+        }
     }
 
     public int calculate(final String expression) {
-        List<Integer> numbers = getNumbers(expression);
-        Integer operand1 = numbers.get(0);
-        Integer operand2 = numbers.get(1);
-        return operand1 + operand2;
+        List<String> expressions = getExpressions(expression);
+        int operand1 = Integer.parseInt(expressions.get(0));
+        int operand2 = Integer.parseInt(expressions.get(2));
+        return Operator.of(expressions.get(1))
+            .calculate(operand1, operand2);
     }
 
-    private static List<Integer> getNumbers(final String expression) {
+    private static List<String> getExpressions(final String expression) {
         return Arrays
-            .stream(expression.split("\\W+"))
-            .map(Integer::parseInt)
+            .stream(expression.split("\\s+"))
             .collect(Collectors.toList());
     }
 }
