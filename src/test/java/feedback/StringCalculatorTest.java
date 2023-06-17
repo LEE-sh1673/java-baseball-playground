@@ -29,4 +29,31 @@ public class StringCalculatorTest {
             Arguments.of("3 - 10 + 100", new String[] { "3", "-", "10", "+", "100"})
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideSplitWordsForGetOperands")
+    @DisplayName("주어진 단어들로부터 피연산자를 얻어올 수 있다.")
+    void testGetOperands_givenSplitWords_shouldReturnOperands(
+        final String[] words,
+        final int[] expected) {
+
+        StatementParser parser = new StatementParser(words);
+        int[] operands = parser.getOperands();
+
+        assertThat(operands.length).isEqualTo(expected.length);
+        assertThat(operands).containsExactly(expected);
+    }
+
+    private static Stream<Arguments> provideSplitWordsForGetOperands() {
+        return Stream.of(
+            Arguments.of(
+                new String[] { "2", "+", "3", "*", "4", "/", "2"},
+                new int[] { 2, 3, 4, 2}
+            ),
+            Arguments.of(
+                new String[] { "3", "-", "10", "+", "100"},
+                new int[] { 3, 10, 100}
+            )
+        );
+    }
 }
