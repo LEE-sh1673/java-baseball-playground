@@ -10,7 +10,8 @@ public class StringCalculator {
     private enum Operator {
         ADD("+", (a, b) -> a + b),
         SUB("-", (a, b) -> a - b),
-        MUL("*", (a, b) -> a * b);
+        MUL("*", (a, b) -> a * b),
+        DIV("/", (a, b) -> a / b);
 
         private final String sign;
 

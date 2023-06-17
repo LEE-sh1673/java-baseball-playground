@@ -31,4 +31,12 @@ public class StringCalculatorTest {
         assertThat(cal.calculate("200 * 10")).isEqualTo(2000);
         assertThat(cal.calculate("15 * 15")).isEqualTo(225);
     }
+
+    @Test
+    @DisplayName("주어진 두 숫자에 대한 나눗셈을 수행할 수 있다.")
+    void div_twoNumber_ReturnDivValue() {
+        assertThat(cal.calculate("10 / 2")).isEqualTo(5);
+        assertThat(cal.calculate("4 / 4")).isEqualTo(1);
+        assertThat(cal.calculate("44 / 2")).isEqualTo(22);
+    }
 }
