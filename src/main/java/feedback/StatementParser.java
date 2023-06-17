@@ -6,7 +6,7 @@ public class StatementParser {
 
     private static final String OPERAND_DELIMITER = "-?[0-9]+";
 
-    private static final String OPERATOR_DELIMITER = "[+*/]|(?<=\\s)-";
+    private static final String OPERATOR_DELIMITER = "[-+*/]|(?<=\\s)";
 
     private final int[] operands;
 
